@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's Compass · Learn Lab</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M13 3h6v2h-1v6l5 12a3 3 0 0 1-3 4H12a3 3 0 0 1-3-4l5-12V5h-1z' fill='%23fff' stroke='%23000' stroke-width='1.5'/%3E%3Cpath d='M11.5 18h9l1.4 3.4a2 2 0 0 1-1.9 2.6H12a2 2 0 0 1-1.9-2.6z' fill='%232176ef'/%3E%3Ccircle cx='14' cy='20' r='1' fill='%23fa241b'/%3E%3Ccircle cx='17.5' cy='21' r='1' fill='%23fedb31'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ll-blue:#2176ef;--ll-blue-d:#1a5fc4;--ll-red:#fa241b;--ll-yellow:#fedb31;
+    --ll-black:#000;--ll-ink:#15181f;--ll-bg:#fff;--ll-surface:#f5f8ff;--ll-line:#e6e9f2;--ll-muted:#5b6477;
+    --ll-font-head:'Fredoka',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --ll-font-body:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --ll-radius-card:16px;--ll-radius-ctl:12px;--ll-border:2px solid var(--ll-black);
+    --ll-shadow:4px 4px 0 var(--ll-black);--ll-shadow-sm:3px 3px 0 var(--ll-black);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{font-family:var(--ll-font-body);color:var(--ll-ink);background:var(--ll-surface);line-height:1.55;-webkit-text-size-adjust:100%;}
+  .ll-wrap{max-width:760px;margin:0 auto;padding:16px;}
+  .ll-header{display:flex;align-items:center;gap:16px;background:var(--ll-bg);border:var(--ll-border);border-radius:var(--ll-radius-card);box-shadow:var(--ll-shadow);padding:16px;margin-bottom:22px;}
+  .ll-header img.ll-logo{height:40px;width:auto;display:block;flex:0 0 auto;}
+  .ll-header h1{font-family:var(--ll-font-head);font-weight:700;font-size:1.25rem;margin:0;line-height:1.1;}
+  .ll-header p{margin:2px 0 0;font-size:.9rem;color:var(--ll-muted);}
+  .ll-card{background:var(--ll-bg);border:var(--ll-border);border-radius:var(--ll-radius-card);padding:22px;margin-bottom:16px;}
+  .ll-card--pop{box-shadow:var(--ll-shadow);}
+  .ll-label{display:block;font-weight:700;font-size:.92rem;margin:0 0 6px;}
+  .ll-input,.ll-select{width:100%;font-family:var(--ll-font-body);font-size:1rem;padding:11px 12px;border:var(--ll-border);border-radius:var(--ll-radius-ctl);background:#fff;color:var(--ll-ink);min-height:44px;}
+  .ll-input:focus,.ll-select:focus{outline:3px solid var(--ll-yellow);outline-offset:1px;}
+  .ll-field{margin-bottom:16px;}
+  .ll-btn{font-family:var(--ll-font-head);font-weight:600;font-size:1rem;min-height:44px;padding:10px 18px;border:var(--ll-border);border-radius:var(--ll-radius-ctl);background:var(--ll-blue);color:#fff;cursor:pointer;box-shadow:var(--ll-shadow-sm);transition:transform .06s ease,box-shadow .06s ease,background .15s ease;display:inline-flex;align-items:center;justify-content:center;gap:8px;}
+  .ll-btn:hover{background:var(--ll-blue-d);transform:translate(-1px,-1px);}
+  .ll-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ll-black);}
+  .ll-btn:focus-visible{outline:3px solid var(--ll-yellow);outline-offset:2px;}
+  .ll-btn--ghost{background:#fff;color:var(--ll-ink);}
+  .ll-btn--ghost:hover{background:var(--ll-surface);}
+  .ll-btn.is-copied{background:var(--ll-yellow);color:var(--ll-black);}
+  .ll-row{display:flex;flex-wrap:wrap;gap:10px;}
+  .ll-h2{font-family:var(--ll-font-head);font-weight:700;font-size:1.05rem;margin:0 0 12px;}
+  .ll-plan{list-style:none;margin:0;padding:0;}
+  .ll-block{display:flex;gap:12px;align-items:flex-start;border:var(--ll-border);border-radius:var(--ll-radius-ctl);padding:12px 14px;margin-bottom:10px;background:var(--ll-surface);}
+  .ll-block .time{font-family:var(--ll-font-head);font-weight:700;color:var(--ll-blue);white-space:nowrap;min-width:120px;}
+  .ll-block .what{font-weight:600;}
+  .ll-block.is-break{background:#fffbe8;}
+  .ll-block.is-break .time{color:var(--ll-red);}
+  .ll-empty{text-align:center;color:var(--ll-muted);padding:18px;}
+  .ll-footer{text-align:center;font-size:.82rem;color:var(--ll-muted);padding:22px 0 16px;}
+  .ll-footer b{color:var(--ll-blue);font-family:var(--ll-font-head);}
+  @media (max-width:520px){.ll-header h1{font-size:1.1rem;}.ll-block{flex-direction:column;gap:2px;}.ll-block .time{min-width:0;}}
+</style>
+</head>
+<body>
+  <main class="ll-wrap">
+    <header class="ll-header">
+      <img class="ll-logo" src="../../assets/learnlab-logo.png" alt="Learn Lab logo">
+      <div class="ll-htext">
+        <h1>Today's Compass</h1>
+        <p>Your top 3 priorities → one calm, time-blocked day.</p>
+      </div>
+    </header>
+
+    <section class="ll-card ll-card--pop">
+      <div class="ll-field">
+        <label class="ll-label" for="start">Start time</label>
+        <input class="ll-input" id="start" type="time" value="08:30">
+      </div>
+      <div class="ll-field">
+        <label class="ll-label" for="p1">Priority 1 — the big rock</label>
+        <input class="ll-input" id="p1" type="text" placeholder="e.g. Teach fractions">
+      </div>
+      <div class="ll-field">
+        <label class="ll-label" for="p2">Priority 2</label>
+        <input class="ll-input" id="p2" type="text" placeholder="e.g. Reading groups">
+      </div>
+      <div class="ll-field">
+        <label class="ll-label" for="p3">Priority 3</label>
+        <input class="ll-input" id="p3" type="text" placeholder="e.g. Science experiment">
+      </div>
+      <div class="ll-field">
+        <label class="ll-label" for="mins">Minutes per priority block</label>
+        <select class="ll-select" id="mins">
+          <option value="30">30 minutes</option>
+          <option value="45" selected>45 minutes</option>
+          <option value="60">60 minutes</option>
+        </select>
+      </div>
+      <div class="ll-row">
+        <button class="ll-btn" id="build" type="button">🧭 Set my compass</button>
+        <button class="ll-btn ll-btn--ghost" id="reset" type="button">Reset</button>
+      </div>
+    </section>
+
+    <section class="ll-card" id="out" hidden>
+      <div class="ll-row" style="justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <h2 class="ll-h2" style="margin:0;">Your day, blocked out</h2>
+        <button class="ll-btn ll-btn--ghost" id="copy" type="button">Copy</button>
+      </div>
+      <ol class="ll-plan" id="plan" aria-live="polite"></ol>
+    </section>
+
+    <footer class="ll-footer">Learn Lab · <b>Discover. Understand. Succeed.</b></footer>
+  </main>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  var buildBtn=$('build'), resetBtn=$('reset'), copyBtn=$('copy'), out=$('out'), planEl=$('plan');
+
+  function pad(n){ return (n<10?'0':'')+n; }
+  function fmt(mins){
+    var h=Math.floor(mins/60)%24, m=mins%60;
+    var ap=h<12?'AM':'PM', hh=h%12; if(hh===0)hh=12;
+    return hh+':'+pad(m)+' '+ap;
+  }
+  function parseStart(){
+    var v=$('start').value||'08:30';
+    var parts=v.split(':'); return (parseInt(parts[0],10)||8)*60+(parseInt(parts[1],10)||30);
+  }
+
+  function build(){
+    var ps=[$('p1').value.trim(),$('p2').value.trim(),$('p3').value.trim()].filter(Boolean);
+    if(!ps.length){
+      out.hidden=false;
+      planEl.innerHTML='<li class="ll-empty">Add at least one priority and I’ll map your day. 👆</li>';
+      return;
+    }
+    var blockLen=parseInt($('mins').value,10)||45;
+    var t=parseStart();
+    var rows=[];
+    rows.push({time:fmt(t),what:'Soft start — settle, greet, one calm breath',brk:true}); t+=10;
+    ps.forEach(function(p,i){
+      rows.push({time:fmt(t)+' – '+fmt(t+blockLen),what:'Focus '+(i+1)+': '+p}); t+=blockLen;
+      if(i<ps.length-1){ rows.push({time:fmt(t)+' – '+fmt(t+10),what:'Brain break / transition',brk:true}); t+=10; }
+    });
+    rows.push({time:fmt(t)+' – '+fmt(t+15),what:'Flex time — catch up or extend a favourite'}); t+=15;
+    rows.push({time:fmt(t),what:'Wrap up — tidy, one bright thing, ready for tomorrow',brk:true});
+
+    planEl.innerHTML='';
+    rows.forEach(function(r){
+      var li=document.createElement('li');
+      li.className='ll-block'+(r.brk?' is-break':'');
+      var s=document.createElement('span'); s.className='time'; s.textContent=r.time;
+      var w=document.createElement('span'); w.className='what'; w.textContent=r.what;
+      li.appendChild(s); li.appendChild(w); planEl.appendChild(li);
+    });
+    out.hidden=false;
+    out.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+
+  function planText(){
+    var lines=['TODAY’S COMPASS',''];
+    planEl.querySelectorAll('.ll-block').forEach(function(li){
+      lines.push(li.querySelector('.time').textContent+'  '+li.querySelector('.what').textContent);
+    });
+    lines.push('','via Learn Lab — Discover. Understand. Succeed.');
+    return lines.join('\n');
+  }
+
+  function copy(){
+    var text=planText();
+    var done=function(){ copyBtn.textContent='Copied!'; copyBtn.classList.add('is-copied'); setTimeout(function(){copyBtn.textContent='Copy';copyBtn.classList.remove('is-copied');},1600); };
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done,fallback); } else { fallback(); }
+    function fallback(){ var ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');done();}catch(e){} document.body.removeChild(ta); }
+  }
+
+  function reset(){
+    ['p1','p2','p3'].forEach(function(id){ $(id).value=''; });
+    $('start').value='08:30'; $('mins').value='45';
+    out.hidden=true; planEl.innerHTML=''; $('p1').focus();
+  }
+
+  buildBtn.addEventListener('click',build);
+  resetBtn.addEventListener('click',reset);
+  copyBtn.addEventListener('click',copy);
+})();
+</script>
+</body>
+</html>
