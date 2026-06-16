@@ -240,7 +240,7 @@
     $('empty').hidden=rows.length>0;
     $('count').textContent=rows.length+(rows.length===1?' tool':' tools')+(activeCat!=='all'?(' in '+CATNAME[activeCat]):'')+(q?(' matching “'+query.trim()+'”'):'');
     rows.forEach(function(a){
-      var card=document.createElement('a'); card.className='ll-app'; card.href='apps/'+a.f;
+      var card=document.createElement('a'); card.className='ll-app'; card.href=a.f;
       card.innerHTML='<span class="cat">'+esc(CATNAME[a.c])+'</span><h3>'+highlight(a.t,q)+'</h3><p>'+highlight(a.d,q)+'</p><span class="go">Open →</span>';
       grid.appendChild(card);
     });
